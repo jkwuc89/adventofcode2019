@@ -10,4 +10,5 @@ end
 
 modules = Utils.read_numbers_from(:file => ARGV[0])
 day_one = DayOne.new
-puts "Fuel requirements for all modules: #{day_one.sum_fuel_for_all_modules(:modules => modules)}"
+puts "Puzzle 1 fuel requirements for all modules: #{day_one.puzzle_one_sum_fuel_for_all_modules(:modules => modules)}"
+puts "Puzzle 2 fuel requirements for all modules: #{day_one.puzzle_two_sum_fuel_for_all_modules(:modules => modules)}"
