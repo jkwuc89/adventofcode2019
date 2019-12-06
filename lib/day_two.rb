@@ -32,6 +32,26 @@ class DayTwo
     parsed_and_executed_program
   end
 
+  def determine_noun_and_verb_for_output(program:, desired_output:)
+    (0..99).each do |current_noun|
+      (0..99).each do |current_verb|
+        executed_program = run_program(:program => program, :noun => current_noun, :verb => current_verb)
+        return {
+          :noun => current_noun,
+          :verb => current_verb
+        } if executed_program[0] == desired_output
+      end
+    end
+
+    {}
+  end
+
+  def get_calculated_noun_and_verb_for(program:, desired_output:)
+    noun_and_verb = determine_noun_and_verb_for_output(:program => program, :desired_output => desired_output)
+    return 0 if noun_and_verb == {}
+    noun_and_verb[:noun] * 100 + noun_and_verb[:verb]
+  end
+
   private
 
   def _execute_instruction(op_code:, parameter_1:, parameter_2:)

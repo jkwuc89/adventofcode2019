@@ -68,4 +68,40 @@ describe DayTwo do
       it { expect(result[0]).to eq(4138687) }
     end
   end
+
+  context "#determine_noun_and_verb_for_output" do
+    let(:result) { day_two.determine_noun_and_verb_for_output(:program => program, :desired_output => desired_output) }
+
+    context "with output from puzzle 1" do
+      let(:program) { File.read("input/day_two.txt") }
+      let(:desired_output) { 4138687 }
+
+      it { expect(result).to eq({:noun => 12, :verb => 2}) }
+    end
+
+    context "with desired output for puzzle 2" do
+      let(:program) { File.read("input/day_two.txt") }
+      let(:desired_output) { 19690720 }
+
+      it { expect(result).to eq({:noun => 66, :verb => 35}) }
+    end
+  end
+
+  context "#get_calculated_noun_and_verb_for" do
+    let(:result) { day_two.get_calculated_noun_and_verb_for(:program => program, :desired_output => desired_output) }
+
+    context "with output from puzzle 1" do
+      let(:program) { File.read("input/day_two.txt") }
+      let(:desired_output) { 4138687 }
+
+      it { expect(result).to eq(12 * 100 + 2) }
+    end
+
+    context "with desired output for puzzle 2" do
+      let(:program) { File.read("input/day_two.txt") }
+      let(:desired_output) { 19690720 }
+
+      it { expect(result).to eq(66 * 100 + 35) }
+    end
+  end
 end
