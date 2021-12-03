@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DayTwo
   InvalidOpCodeError = Class.new(StandardError)
 
@@ -6,7 +8,7 @@ class DayTwo
   END_PROGRAM_OP_CODE = 99
 
   def run_program(program:, noun: nil, verb: nil)
-    parsed_and_executed_program = program.split(",").map(&:to_i)
+    parsed_and_executed_program = program.split(',').map(&:to_i)
 
     parsed_and_executed_program[1] = noun if noun
     parsed_and_executed_program[2] = verb if verb
@@ -21,9 +23,9 @@ class DayTwo
       output_position = parsed_and_executed_program[op_code_position + 3]
 
       parsed_and_executed_program[output_position] = _execute_instruction(
-        :op_code => op_code,
-        :parameter_1 => parsed_and_executed_program[parameter_1_position],
-        :parameter_2 => parsed_and_executed_program[parameter_2_position]
+        op_code: op_code,
+        parameter1: parsed_and_executed_program[parameter_1_position],
+        parameter2: parsed_and_executed_program[parameter_2_position]
       )
 
       op_code_position += 4
@@ -35,11 +37,13 @@ class DayTwo
   def determine_noun_and_verb_for_output(program:, desired_output:)
     (0..99).each do |current_noun|
       (0..99).each do |current_verb|
-        executed_program = run_program(:program => program, :noun => current_noun, :verb => current_verb)
-        return {
-          :noun => current_noun,
-          :verb => current_verb
-        } if executed_program[0] == desired_output
+        executed_program = run_program(program: program, noun: current_noun, verb: current_verb)
+        if executed_program[0] == desired_output
+          return {
+            noun: current_noun,
+            verb: current_verb
+          }
+        end
       end
     end
 
@@ -47,19 +51,20 @@ class DayTwo
   end
 
   def get_calculated_noun_and_verb_for(program:, desired_output:)
-    noun_and_verb = determine_noun_and_verb_for_output(:program => program, :desired_output => desired_output)
+    noun_and_verb = determine_noun_and_verb_for_output(program: program, desired_output: desired_output)
     return 0 if noun_and_verb == {}
-    noun_and_verb[:noun] * 100 + noun_and_verb[:verb]
+
+    (noun_and_verb[:noun] * 100) + noun_and_verb[:verb]
   end
 
   private
 
-  def _execute_instruction(op_code:, parameter_1:, parameter_2:)
+  def _execute_instruction(op_code:, parameter1:, parameter2:)
     case op_code
     when ADD_OP_CODE
-      result = parameter_1 + parameter_2
+      result = parameter1 + parameter2
     when MULTIPLE_OP_CODE
-      result = parameter_1 * parameter_2
+      result = parameter1 * parameter2
     else
       raise InvalidOpCodeError
     end
@@ -67,4 +72,3 @@ class DayTwo
     result
   end
 end
-
